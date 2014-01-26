@@ -12,6 +12,8 @@ else
   raise "dude, where's my config.yml?" if settings.production?
   config_file './config.yml.example'
 end
+enable :sessions
+set :session_secret, settings.session_secret
 
 get '/' do
   "Hello Worldy! #{settings.username}"

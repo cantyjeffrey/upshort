@@ -1,8 +1,20 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ansi (1.4.3)
     backports (3.4.0)
+    builder (3.2.2)
+    hashie (2.0.5)
+    minitest (5.2.2)
+    minitest-reporters (1.0.0)
+      ansi
+      builder
+      minitest (>= 5.0)
+      powerbar
     multi_json (1.8.4)
+    powerbar (1.0.11)
+      ansi (~> 1.4.0)
+      hashie (>= 1.1.0)
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
@@ -25,5 +37,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  minitest
+  minitest-reporters
   sinatra
   sinatra-contrib
