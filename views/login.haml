@@ -1,0 +1,10 @@
+%form.form-login{method: 'post', action: '/login'}
+  %h2.form-login-heading
+    Please Login
+  %input.form-control{type: 'text', required: true, autofocus: true, placeholder: 'Username', name: 'username'}
+  %input.form-control{type: 'password', required: true, placeholder: 'Password', name: 'password'}
+  %label.checkbox
+    %input{type: 'checkbox', value: 'rememberme', name: 'rememberme'}
+      Remember me
+  %button.btn.btn-lg.btn-primary.btn-block{type: 'submit'}
+    Login

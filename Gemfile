@@ -4,6 +4,9 @@ source 'https://rubygems.org'
 gem 'sinatra'
 gem 'sinatra-contrib'
 
+# style is important
+gem 'haml'
+
 # testing
 gem 'minitest'
 gem 'minitest-reporters'

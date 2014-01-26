@@ -1,8 +1,10 @@
 require File.expand_path '../../test.rb', __FILE__
 
-describe "my example app" do
-  it "should successfully return a greeting" do
-    get '/'
-    assert_equal 'Welcome to my page!', last_response.body
+describe 'upshort login' do
+  before { get '/' }
+
+  it 'shows the login page' do
+    assert last_response.ok?
+    assert last_response.body.include? 'Please Login'
   end
 end

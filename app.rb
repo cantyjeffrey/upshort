@@ -1,9 +1,8 @@
 require 'sinatra'
 require 'sinatra/config_file'
-if settings.development?
-  require 'sinatra/reloader'
-  require 'pry'
-end
+require 'haml'
+require 'sinatra/reloader' if settings.development?
+require 'pry' if settings.development? || settings.test?
 
 # configuration
 if File.exists? './config.yml'
@@ -16,5 +15,5 @@ enable :sessions
 set :session_secret, settings.session_secret
 
 get '/' do
-  "Hello Worldy! #{settings.username}"
+  haml :login
 end
