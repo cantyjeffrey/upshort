@@ -1,0 +1,16 @@
+#
+# example configuration file
+#
+# *you should probably copy this to config.yml and put in your prod settings
+#
+development: &defaults
+  username: "upshort"
+  password: "comingupshort"
+test:
+  <<: *defaults
+  username: "testupshort"
+  password: "1$8!bjc;zf'0qbY"
+production:
+  <<: *defaults
+  username: "TODOUSERNAME"
+  password: "TODOPASSWORD"
