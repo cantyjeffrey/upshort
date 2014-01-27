@@ -31,5 +31,6 @@ end
 
 # run all specs, if executed directly
 if __FILE__ == $0
-  Dir.glob('./spec/**/*_spec.rb') { |f| require f }
+  path = File.expand_path('../', __FILE__)
+  Dir.glob("#{path}/spec/*_spec.rb") { |f| require f }
 end

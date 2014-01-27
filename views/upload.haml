@@ -1,0 +1,16 @@
+%form.form-upload{method: 'post', action: '/upload', class: defined?(error_msg) ? 'has-error' : ''}
+  %h2.form-upload-heading
+    Upload a file
+  %span.btn.btn-lg.btn-block.btn-primary.btn-file
+    Browse
+    %input{type: 'file', name: 'file'}
+  %input.form-control{type: 'text', readonly: true, placeholder: '...'}
+  .submit.disabled
+    %span.text-success.glyphicon.glyphicon-flash
+    %button.btn.btn-lg.btn-success{type: 'submit', disabled: true}
+      Short it!
+    %span.text-success.glyphicon.glyphicon-flash.right
+  - if defined?(error_msg)
+    %br
+    %p.text-danger
+      = error_msg

@@ -4,10 +4,12 @@
 # *you should probably copy this to config.yml and put in your prod settings
 #
 development: &defaults
-  username: "upshort"
-  password: "password"
-  session_name: "_upshort_session"
+  username:       "upshort"
+  password:       "password"
+  session_name:   "_upshort_session"
   session_secret: "!l4Na3|rMnt*Q*tW-J7/6mDn4sy_0|"
+  random_length:  6
+  random_retries: 10
 test:
   <<: *defaults
   username: "testupshort"

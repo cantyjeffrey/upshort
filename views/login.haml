@@ -1,8 +1,8 @@
 %form.form-login{method: 'post', action: '/login', class: defined?(error_msg) ? 'has-error' : ''}
   %h2.form-login-heading
     Please Login
-  %input.form-control{type: 'text', autofocus: true, placeholder: 'Username', name: 'username'}
-  %input.form-control{type: 'password', placeholder: 'Password', name: 'password'}
+  %input.form-control{type: 'text', required: true, autofocus: true, placeholder: 'Username', name: 'username'}
+  %input.form-control{type: 'password', required: true, placeholder: 'Password', name: 'password'}
   %label.checkbox
     %input{type: 'checkbox', value: 'rememberme', name: 'rememberme'}
       Remember me

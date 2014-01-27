@@ -3,13 +3,14 @@ require 'sinatra/config_file'
 require 'haml'
 require 'sinatra/reloader' if settings.development?
 require 'pry' if settings.development? || settings.test?
+app_root = File.expand_path('../', __FILE__)
 
 # configuration
-if File.exists? './config.yml'
-  config_file './config.yml'
+if File.exists? "#{app_root}/config.yml"
+  config_file "#{app_root}/config.yml"
 else
   raise "dude, where's my config.yml?" if settings.production?
-  config_file './config.yml.example'
+  config_file "#{app_root}/config.yml.example"
 end
 set :sessions, key: settings.session_name, secret: settings.session_secret
 
@@ -17,6 +18,23 @@ set :sessions, key: settings.session_name, secret: settings.session_secret
 helpers do
   def logged_in?
     session[:username] == settings.username
+  end
+  def all_shorts
+    Dir.glob("app_root/public/uploads/*.short.*")
+  end
+  def mk_rand
+    chars = [('a'..'z'), ('A'..'Z'), ('0'..'9')].map { |i| i.to_a }.flatten
+    (0...settings.random_length).map { chars[rand(chars.length)] }.join
+  end
+  def get_shorter
+    short = mk_rand
+    tries = 0
+    while all_shorts.include?(short)
+      short = mk_rand
+      tries += 1
+      raise "this isn't random enough" if tries > settings.random_retries
+    end
+    short
   end
 end
 
@@ -53,5 +71,6 @@ get '/upload' do
   haml :upload
 end
 post '/upload' do
+  pass unless logged_in?
   #TODO: file upload
 end
