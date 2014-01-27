@@ -1,9 +1,8 @@
 require File.expand_path '../../test.rb', __FILE__
 
 describe 'GET login' do
-  before { get '/' }
-
   it 'shows the login page' do
+    get '/'
     assert last_response.ok?
     assert last_response.body.include? 'Please Login'
   end
