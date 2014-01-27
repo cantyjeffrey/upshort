@@ -1,2 +1,12 @@
-%h1
-  Index images
+.short-all
+  .row
+    - shorts.each do |short|
+      .col-sm-4.col-md-3
+        .thumbnail
+          %a{href: short[:name]}
+            %img{src: short[:src]}
+          .caption
+            %h4
+              = short[:name]
+            %p
+              = Time.parse(short[:time]).strftime('%b %-d %Y - %l:%M%P')

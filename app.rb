@@ -23,7 +23,18 @@ helpers do
     session[:username] == settings.username
   end
   def all_shorts
-    Dir.glob("#{settings.app_root}/public/uploads/*.short.*").map {|f| File.basename(f).split('.short.').first}
+    all = {}
+    Dir.glob("#{settings.app_root}/public/uploads/*.short.*").each do |f|
+      name = File.basename(f).split('.short.').first
+      all[name] = {
+        src:   'uploads/' + File.basename(f),
+        type:  'img', #TODO
+        name:  name,
+        time:  File.mtime(f).to_s,
+        title: nil,
+      }
+    end
+    all
   end
   def mk_rand
     chars = [('a'..'z'), ('A'..'Z'), ('0'..'9')].map { |i| i.to_a }.flatten
@@ -85,10 +96,14 @@ end
 
 # le getshort routes
 get '/' do
-  all_shorts
-  haml (logged_in? ? :index : :login)
+  if logged_in?
+    sorted = all_shorts.values.sort_by {|h| h[:time]}.reverse
+    haml :index, locals: {shorts: sorted}
+  else
+    haml :login
+  end
 end
 get '/:short' do
   pass unless all_shorts.include?(params[:short])
-  haml :short
+  haml :show, locals: {short: all_shorts[params[:short]]}
 end
