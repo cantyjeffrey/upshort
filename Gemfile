@@ -10,3 +10,4 @@ gem 'haml'
 # testing
 gem 'minitest'
 gem 'minitest-reporters'
+gem 'mocha'

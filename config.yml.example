@@ -5,7 +5,8 @@
 #
 development: &defaults
   username: "upshort"
-  password: "comingupshort"
+  password: "password"
+  session_name: "_upshort_session"
   session_secret: "!l4Na3|rMnt*Q*tW-J7/6mDn4sy_0|"
 test:
   <<: *defaults
