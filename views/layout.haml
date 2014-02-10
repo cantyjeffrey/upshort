@@ -9,6 +9,8 @@
     %link{rel: 'shortcut icon', href: 'favicon.png'}
     %link{rel: 'stylesheet', href: 'css/bootstrap.min.css'}
     %link{rel: 'stylesheet', href: 'css/upshort.css'}
+    - if File.exists?("#{settings.app_root}/public/css/custom.css")
+      %link{rel: 'stylesheet', href: 'css/custom.css'}
     %script{type: 'text/javascript', src: 'js/jquery.min.js'}
     %script{type: 'text/javascript', src: 'js/upshort.js'}
 %html

@@ -1,0 +1,6 @@
+/*
+ * custom stylez for your app
+ */
+body {
+  background: red;
+}
