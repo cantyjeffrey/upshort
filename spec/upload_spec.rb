@@ -31,5 +31,9 @@ describe 'POST upload' do
     login_user!
     post '/upload', file: Rack::Test::UploadedFile.new(TESTFILE, 'image/jpeg')
     assert last_response.redirect?
+    short = last_response.headers['X-Short']
+    Dir.glob("#{app.settings.app_root}/public/uploads/#{short}.*").each do |f|
+      File.delete(f)
+    end
   end
 end

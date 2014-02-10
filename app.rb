@@ -90,6 +90,7 @@ post '/upload' do
     File.open("#{settings.app_root}/public/uploads/#{sname}", 'w') do |f|
       f.write(params['file'][:tempfile].read)
     end
+    headers 'X-Short' => short
     redirect "/#{short}"
   end
 end
@@ -103,7 +104,14 @@ get '/' do
     haml :login
   end
 end
-get '/:short' do
-  pass unless all_shorts.include?(params[:short])
-  haml :show, locals: {short: all_shorts[params[:short]]}
+get '/:short' do |short|
+  pass unless all_shorts.include?(short)
+  haml :show, locals: {short: all_shorts[short]}
+end
+delete '/:short' do |short|
+  pass unless logged_in? && all_shorts.include?(short)
+  Dir.glob("#{settings.app_root}/public/uploads/#{short}.*").each do |f|
+    File.delete(f)
+  end
+  status 204
 end

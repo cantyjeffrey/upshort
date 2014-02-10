@@ -2,11 +2,21 @@
   .row
     - shorts.each do |short|
       .col-sm-4.col-md-3
-        .thumbnail
-          %a{href: short[:name]}
-            %img{src: short[:src]}
+        .thumbnail{data: {short: short[:name]}}
+          .img-ct
+            %table
+              %tr
+                %td{valign: 'middle'}
+                  %a{href: short[:name]}
+                    %img{src: short[:src]}
           .caption
             %h4
               = short[:name]
             %p
               = Time.parse(short[:time]).strftime('%b %-d %Y - %l:%M%P')
+          .text-danger.delete.glyphicon.glyphicon-trash
+          .alert.alert-danger
+            .pull-right
+              %button.btn.btn-default{type: 'button'} Cancel
+              %button.btn.btn-danger{type: 'button'} Delete
+

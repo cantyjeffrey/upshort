@@ -2,9 +2,11 @@
  * upshort application styles - modify to your heart's content
  */
 body {
-  padding-top: 51px;
   padding-bottom: 40px;
   background-color: #eee;
+}
+body.logged-in {
+  padding-top: 51px;
 }
 
 /* login page */
@@ -34,13 +36,21 @@ body {
 }
 .form-login input[type="text"] {
   margin-bottom: -1px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+      -moz-border-radius-bottomleft: 0;
+          border-bottom-left-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+      -moz-border-radius-bottomright: 0;
+          border-bottom-right-radius: 0;
 }
 .form-login input[type="password"] {
   margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  -webkit-border-top-left-radius: 0;
+      -moz-border-radius-topleft: 0;
+          border-top-left-radius: 0;
+  -webkit-border-top-right-radius: 0;
+      -moz-border-radius-topright: 0;
+          border-top-right-radius: 0;
 }
 
 /* upload page */
@@ -57,8 +67,12 @@ body {
   position: relative;
   overflow: hidden;
   margin-bottom: -1px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+      -moz-border-radius-bottomleft: 0;
+          border-bottom-left-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+      -moz-border-radius-bottomright: 0;
+          border-bottom-right-radius: 0;
 }
 .form-upload .btn-file input[type=file] {
   position: absolute;
@@ -88,8 +102,12 @@ body {
 }
 .form-upload input[type="text"] {
   margin-top: -1px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  -webkit-border-top-left-radius: 0;
+      -moz-border-radius-topleft: 0;
+          border-top-left-radius: 0;
+  -webkit-border-top-right-radius: 0;
+      -moz-border-radius-topright: 0;
+          border-top-right-radius: 0;
   text-align: center;
 }
 .form-upload .submit {
@@ -151,6 +169,62 @@ body {
   max-height: 100%;
   margin-top: 40px;
 }
+
+/* index uploads */
 .short-all {
   margin-top: 20px;
+}
+.short-all .thumbnail {
+  position: relative;
+  overflow: hidden;
+}
+.short-all .img-ct {
+  height: 180px;
+  overflow: hidden;
+}
+.short-all table {
+  height: 100%;
+}
+.short-all .delete {
+  display: none;
+  position: absolute;
+  right: 8px;
+  top: auto;
+  bottom: 32px;
+  font-size: 30px;
+  cursor: pointer;
+}
+.short-all .thumbnail:hover .delete {
+  display: block;
+}
+.short-all .delete:hover {
+  right: 7px;
+  bottom: 31px;
+  font-size: 32px;
+}
+.short-all .deleting .delete {
+  display: none;
+}
+.short-all .alert-danger {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 82px;
+  padding-top: 22px;
+  margin: 0 0 0 100%;
+  border: 0 none;
+  border-top: 1px solid #ebccd1;
+  -webkit-border-top-left-radius: 0;
+      -moz-border-radius-topleft: 0;
+          border-top-left-radius: 0;
+  -webkit-border-top-right-radius: 0;
+      -moz-border-radius-topright: 0;
+          border-top-right-radius: 0;
+  -webkit-transition: margin .2s ease-in-out;
+     -moz-transition: margin .2s ease-in-out;
+       -o-transition: margin .2s ease-in-out;
+          transition: margin .2s ease-in-out;
+}
+.short-all .deleting .alert-danger {
+  margin-left: -4px;
 }

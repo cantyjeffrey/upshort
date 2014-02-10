@@ -20,4 +20,16 @@ $(function() {
     }
   });
 
+  // deleter
+  $('.short-all .thumbnail .delete').on('click', function() {
+    $(this).closest('.thumbnail').addClass('deleting');
+  });
+  $('.short-all .alert-danger .btn-default').on('click', function() {
+    $(this).closest('.thumbnail').removeClass('deleting');
+  });
+  $('.short-all .alert-danger .btn-danger').on('click', function() {
+    $.ajax({type: 'DELETE', url: '/' + $(this).closest('.thumbnail').data('short')});
+    $(this).closest('.thumbnail').parent().fadeOut(200, function() { $(this).remove(); });
+  });
+
 });
