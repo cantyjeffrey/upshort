@@ -103,9 +103,11 @@ end
 # le getshort routes
 get '/' do
   if logged_in?
+    headers 'X-Upshort-Auth' => 'true'
     sorted = all_shorts.values.sort_by {|h| h[:time]}.reverse
     haml :index, locals: {shorts: sorted}
   else
+    headers 'X-Upshort-Auth' => 'false'
     haml :login
   end
 end
