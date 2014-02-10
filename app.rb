@@ -20,7 +20,12 @@ set :sessions, key: settings.session_name, secret: settings.session_secret
 # helpers
 helpers do
   def logged_in?
-    session[:username] == settings.username
+    auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    if auth.provided? && auth.basic? && auth.credentials
+      auth.credentials == [settings.username, settings.password]
+    else
+      session[:username] == settings.username
+    end
   end
   def all_shorts
     all = {}
