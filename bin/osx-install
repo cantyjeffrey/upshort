@@ -1,0 +1,92 @@
+#!/bin/bash
+#
+# OSX utility to watch screenshot folder
+#
+WATCH_PATH=`defaults read com.apple.screencapture location`
+WATCH_PLIST=$HOME/Library/LaunchAgents/upshort.plist
+WATCH_SCRIPT=$HOME/bin/upshort
+WATCH_LOG=$HOME/bin/upshort.log
+
+# currently, only rvm supported
+if [ -s "$HOME/.rvm/scripts/rvm" ]; then
+  RUBY_SRC="$HOME/.rvm/scripts/rvm"
+  RUBY_VERSION=`rvm current`
+elif [ -s "/usr/local/rvm/scripts/rvm" ]; then
+  RUBY_SRC="/usr/local/rvm/scripts/rvm"
+  RUBY_VERSION=`rvm current`
+else
+  echo "ERROR: rvm not found, and that's all I know right now"
+  exit 1
+fi
+
+# upshort host
+read -p $'What is the URL to your upshort server?\n > ' HOST
+curl -I $HOST 2>&1 | grep "X-Upshort-Auth" > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Woh... $HOST doesn't seem to be a valid upshort server"
+  exit 1
+fi
+
+# validate username/password
+read -p $'Your username?\n > ' UNAME
+read -p $'Your password?\n > ' UPASS
+curl -I $HOST -u "$UNAME:$UPASS" 2>&1 | grep "X-Upshort-Auth: true" > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Unable to validate $UNAME/$UPASS against $HOST"
+  exit 1
+fi
+
+# write script file
+mkdir -p ~/bin
+cat > $WATCH_SCRIPT << EOL
+#!/bin/bash
+source $RUBY_SRC
+rvm use $RUBY_VERSION > /dev/null
+
+# upload all files
+for file in $WATCH_PATH/*
+do
+  LOC=\`curl -s -u "$UNAME:$UPASS" -F "file=@\$file" "$HOST/upload" -w "%{url_effective}"\`
+  if [ $? -ne 0 ]; then
+    echo "ERROR - upload failed - $?"
+    terminal-notifier -title "Upshort Error" -message "Something went wrong"
+    exit 1
+  fi
+
+  # success!
+  rm "\$file"
+  terminal-notifier -title "Upshort'd!" -subtitle "\$file" -open "\$LOC"
+done
+EOL
+chmod a+x $WATCH_SCRIPT
+
+# write plist file
+cat > $WATCH_PLIST << EOL
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>upshort</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>$WATCH_SCRIPT</string>
+  </array>
+  <key>WatchPaths</key>
+  <array>
+    <string>$WATCH_PATH</string>
+  </array>
+  <key>ThrotteInterval</key>
+  <integer>0</integer>
+  <key>StandardOutPath</key>
+  <string>$WATCH_LOG</string>
+  <key>StandardErrorPath</key>
+  <string>$WATCH_LOG</string>
+</dict>
+</plist>
+EOL
+
+# watch it!
+launchctl unload $WATCH_PLIST > /dev/null 2>&1
+launchctl load $WATCH_PLIST
+echo "Success!  Watching $WATCH_PATH for screenshots"
